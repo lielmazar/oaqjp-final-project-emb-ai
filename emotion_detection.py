@@ -6,7 +6,4 @@ def emotion_detector(text_to_analyse):
     JSON = { "raw_document": { "text": text_to_analyse } }
     results = requests.post(url = URL, headers = HEADERS, json = JSON)
     return results
-
-emotion_analysis = emotion_detector("Am I happy or glad?")
-print(emotion_analysis)
-
+Z
