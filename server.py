@@ -1,3 +1,6 @@
+"""
+Small flask application for detecing emotions from text
+"""
 from flask import Flask, render_template, request
 import EmotionDetection
 
@@ -5,12 +8,20 @@ app = Flask("myApp")
 
 @app.route("/")
 def home():
+    '''
+    home route
+    '''
     return render_template('index.html')
 
 @app.route("/emotionDetector")
-def emotionDetector():
+def emotion_detector():
+    '''
+    emotion detection route
+    '''
     txt = request.args["textToAnalyze"]
     detected_emotions = EmotionDetection.emotion_detection.emotion_detector(txt)
+    if detected_emotions['dominant_emotion'] is None:
+        return "Invalid text! Please try again!"
     formatted_response = f"""
     For the given statement, 
     the system response is 'anger': {detected_emotions['anger']}, 
