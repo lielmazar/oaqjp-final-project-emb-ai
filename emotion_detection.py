@@ -22,9 +22,20 @@ def emotion_detector(text_to_analyse):
     formatted_text = _ibm_text_requirement_format(text_to_analyse)
     response = requests.post(url = URL, headers = HEADERS, json = formatted_text)
     try:
-        data = _safe_load_json(response) # returns python dictionary
-        # TODO 3.3
-        return data
+        # returns python dictionary
+        response = _safe_load_json(response)
+        # returns a dictonary with the emotions and respcitve scores by IBM
+        emotions_scores = response['emotionPredictions'][0]['emotion']
+        # logic for finiding dominant emotion
+        dominant_emotion = None
+        highest_score = 0
+        for emotion, score in emotions_scores.items():
+            if score > highest_score:
+                highest_score = score
+                dominant_emotion = emotion
+                emotions_scores[emotion] = emotions_scores[emotion]
+        emotions_scores['dominant_emotion'] = dominant_emotion
+        return emotions_scores
     except ValueError as e:
         return f"Error: {e}"
     except json.JSONDecodeError as e:
