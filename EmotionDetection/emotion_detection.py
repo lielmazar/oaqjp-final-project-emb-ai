@@ -1,7 +1,7 @@
 import requests, json
 
 # Define a maximum size limit (in bytes)
-MAX_SIZE = 10000
+MAX_SIZE = 100000
 
 # Calling IBM embedded NLP
 URL = 'https://sn-watson-emotion.labs.skills.network/v1/watson.runtime.nlp.v1/NlpService/EmotionPredict'
